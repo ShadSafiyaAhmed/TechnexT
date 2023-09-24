@@ -1,5 +1,5 @@
 const mongoose=require('mongoose');
-mongoose.connect("mongodb://127.0.0.1:27017/Ecommerce_Project");
+mongoose.connect("mongodb+srv://sahad2u:QXHeNomkFLkMboZm@cluster0.1fwuwsm.mongodb.net/");
 
  const express=require("express");
 // const user_route = require('./routes/userRoute');
