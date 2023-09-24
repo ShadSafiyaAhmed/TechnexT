@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="bootstrap.min.css"> <!-- Add the correct path to your Bootstrap CSS file -->
+    <style>
+        /* Your custom styles here */
+        .profile-key {
+            color: #007bff;
+            font-weight: bold;
+        }
+
+        .profile-value {
+            color: #333;
+        }
+
+        .profile-image {
+            border-radius: 50%;
+            max-width: 150px;
+            max-height: 150px;
+        }
+
+        /* Add your other custom styles here */
+    </style>
+  
+</head>
+<body>
+    <!-- Include your header -->
+    <%- include('../layouts/header.ejs') %>
+
+    <section class="pt-100 pb-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 m-auto">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="dashboard-menu">
+                                <ul class="nav flex-column" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="dashboard-tab" href="/dashboard" role="tab" aria-controls="dashboard" aria-selected="false">
+                                            <i class="fi-rs-settings-sliders mr-10"></i>Dashboard
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="profile-tab" href="/profileDetails" role="tab" aria-controls="profile" aria-selected="true">
+                                            <i class="fi-rs-user mr-10"></i>User Profile
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="orders-tab" href="/orderList" role="tab" aria-controls="orders" aria-selected="false">
+                                            <i class="fi-rs-shopping-cart mr-10"></i>Your Orders
+                                        </a>
+                                    </li>                                
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="address-tab" href="/profileAddress" role="tab" aria-controls="address" aria-selected="false">
+                                            <i class="fi-rs-marker mr-10"></i>My Address
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="Transaction-tab" href="/wallet-placed" role="tab" aria-controls="wallet" aria-selected="false">
+                                            <i class="fi-rs-user mr-10"></i>Transactions
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="tab-content dashboard-content">
+                                <div class="tab-pane fade show active" id="profileDetails">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5 class="mb-0">User Profile</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <p>Here, you can view your user profile information.</p>
+                                            <div class="row align-items-center">
+                                                <div class="col-md-3">
+                                                    <img src="/userImages/<%= user.image %>" alt="User Image" class="img-fluid rounded-circle profile-image">
+                                                </div>
+                                                <div class="col-md-9">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label class="profile-key">Name:</label>
+                                                            <span class="profile-value"><%= user.name %></span>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <label class="profile-key">Email:</label>
+                                                            <span class="profile-value"><%= user.email %></span>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <label class="profile-key">Phone:</label>
+                                                            <span class="profile-value"><%= user.mobile %></span>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Add other tab content here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Include your footer -->
+    <%- include('../layouts/footer.ejs') %>
+
+    <!-- Add your script tags here if needed -->
+
+</body>
+</html>

@@ -1,0 +1,94 @@
+<%-include('../layouts2/header.ejs')%>
+<style>
+    td.name-column,
+    td.description-column {
+    max-width: 100px; /* Adjust the max-width as needed */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+</style>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+<section class="content-main">
+    <div class="content-header">
+        <div>
+            <h2 class="content-title card-title">Products List</h2>
+            <p>Lorem ipsum dolor sit amet.</p>
+        </div>
+        <div>
+            <a href="/admin/addProduct" class="btn btn-primary btn-sm rounded">Add new Product</a>
+        </div>
+    </div>
+    <div class="card mb-4">
+        <div class="table-responsive">
+            <table class="table table-striped table-hover" id="myTable">
+                <thead>
+                    <tr>
+                        <th style="width: 10%;">Image</th>
+                        <th style="width: 15%;">Name</th>
+                        <th style="width: 20%;">Description</th>
+                        <th style="width: 10%;">Price</th>
+                        <th style="width: 10%;">Available Stock</th>
+                        <th style="width: 10%;">Status</th>
+                        <th style="width: 10%;">Category</th>
+                        <th style="width: 20%;">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% productList.forEach(product => { %>
+                    <tr>
+                        <td class="text-center">
+                            <div class="left">
+                                <img src="/productImages/<%= product.images[0] %>" class="img-sm img-thumbnail"
+                                    alt="Item">
+                            </div>
+                        </td>
+                        <td class="align-middle  name-column">
+                            <a class="itemside" href="#">
+                                <h6 class="mb-0"><%= product.name %></h6>
+                            </a>
+                        </td>
+                        <td class="align-middle">
+                            <textarea placeholder="Type here" name="description" name="description" class="form-control" rows="4"> <%= product.description %></textarea>
+                        </td>
+                        <td class="align-middle"><%= product.price %></td>
+                        <td class="align-middle"><%= product.stock %></td>
+                        <td class="align-middle text-center">
+                            <% if (product.unlist == false) { %>
+                            <span class="badge rounded-pill alert-success">Active</span>
+                            <% } else { %>
+                            <span class="badge rounded-pill alert-danger">Deactivated</span>
+                            <% } %>
+                        </td>
+                        <td class="align-middle"><%= product.category %></td>
+                        <td class="text-middle">
+                            <a href="/admin/editProduct?id=<%=product.id%>" class="btn btn-sm font-sm  btn-light rounded">
+                                <i class="material-icons md-edit"></i> Edit
+                            </a>
+                            <a href="/admin/deleteProduct?id=<%=product.id%>" class="btn btn-sm font-sm btn-light rounded">
+                                <i class="material-icons md-delete_forever"></i> Delete
+                            </a>
+                            <div class="dropdown">
+                                <a href="#" data-bs-toggle="dropdown" class="btn btn-light rounded btn-sm font-sm"> <i class="material-icons md-more_horiz"></i> </a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="/admin/unlistProduct?id=<%=product.id%>">unlist</a>
+                                    <a class="dropdown-item" href="/admin/listedProduct?id=<%=product.id%>">List</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </div> <!-- card end// -->
+</section>
+
+<script>
+    $(document).ready(function () {
+        $('#myTable').DataTable();
+    });
+</script>
+<script src="//cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+<%-include('../layouts2/footer.ejs')%>

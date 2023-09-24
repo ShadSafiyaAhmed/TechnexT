@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Otp Verification</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <!-- Custom Styles -->
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: 100px auto;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .form-label {
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Otp Verification</h1>
+    <% if (message) { %>
+    <div class="alert alert-info">
+      <%= message %>
+    </div>
+    <% } %>
+    <form action="/otp-verify" method="POST">
+      <div class="mb-3">
+        <label for="otp" class="form-label">Enter OTP:</label>
+        <input type="text" id="otp" name="otp" class="form-control" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Verify</button>
+      <div id="otp-countdown" class="text-primary">OTP Valid for: <span id="remaining-time"><%= typeof remainingTime !== 'undefined' ? remainingTime : 'N/A' %></span> seconds</div>
+    </form>
+  </div>
+  
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // JavaScript to update the countdown timer
+    const remainingTimeSpan = document.getElementById('remaining-time');
+    let remainingTime = <%= typeof remainingTime !== 'undefined' ? remainingTime : 60 %>;
+  
+    function updateRemainingTime() {
+      if (remainingTime >= 0) {
+        remainingTimeSpan.textContent = remainingTime;
+        remainingTime -= 1;
+      } else {
+        remainingTimeSpan.textContent = '0';
+        // Display the message when the OTP has expired and change its color to red
+        const countdownMessage = document.getElementById('otp-countdown');
+        countdownMessage.textContent = 'OTP has expired.';
+        countdownMessage.style.color = 'red';
+        // Optionally, you can redirect the user or perform some other action here.
+      }
+    }
+  
+    setInterval(updateRemainingTime, 1000);
+  </script>
+  
+  
+  
+</body>
+
+</html>

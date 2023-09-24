@@ -1,0 +1,178 @@
+<%-include('../layouts/header.ejs')%>
+  <!-- Template CSS -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.min.js"></script>
+
+<!-- <main class="main"> -->
+    <section class="mt-50 mb-50">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="product-detail accordion-detail">
+                        <div class="row mb-50">
+                            <div class="col-md-6 col-sm-12 col-xs-12">
+                                <div class="detail-gallery">
+                                    <span class="zoom-icon"><i class="fi-rs-search"></i></span>
+                                    <!-- MAIN SLIDES -->
+                                    <div class="product-image-slider">
+                                        <figure class="border-radius-10">
+                                            <img src="/productImages/<%=product.images[0]%>" alt="product image">
+                                        </figure>
+                                        <figure class="border-radius-10">
+                                            <img src="/productImages/<%=product.images[1]%>" alt="product image">
+                                        </figure>
+                                        <figure class="border-radius-10">
+                                            <img src="./productImages/<%=product.images[2]%>" alt="product image">
+                                        </figure>
+                                    
+                                    </div>
+                                    <!-- THUMBNAILS -->
+                                    <div class="slider-nav-thumbnails pl-15 pr-15">
+                                        <div><img src="/productImages/<%=product.images[0]%>" alt="product image"></div>
+                                        <div><img src="/productImages/<%=product.images[1]%>" alt="product image"></div>
+                                        <div><img src="/productImages/<%=product.images[2]%>" alt="product image"></div>
+                                        
+                                    </div>
+                                </div>
+                                <!-- End Gallery -->
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-xs-12">
+                                <div class="detail-info">
+                                    <h2 class="title-detail"><%=product.name%> Phone</h2>
+                                    <div class="product-detail-rating">
+                                        <div class="pro-details-brand">
+                                            <span> Brands: <a href="shop-grid-right.html">TechnexT</a></span>
+                                        </div>
+                                        <div class="product-rate-cover text-end">
+                                            <div class="product-rate d-inline-block">
+                                                <div class="product-rating" style="width:90%">
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="clearfix product-price-cover">
+                                        <div class="product-price primary-color float-left">
+                                            <ins><span class="text-brand">₹<%=product.price%></span></ins>
+                                              
+                                        </div>
+                                    </div>
+                                    <div class="bt-1 border-color-1 mt-15 mb-15"></div>
+                                    <div class="short-desc mb-30">
+                                        <p><%=product.description%></p>
+                                    </div>
+                                    <div class="product_sort_info font-xs mb-30">
+                                        <ul>
+                                            <!-- <li class="mb-10"><i class="fi-rs-crown mr-5"></i> 1 Year AL Jazeera Brand Warranty</li> -->
+                                            <li class="mb-10"><i class="fi-rs-refresh mr-5"></i> 30 Day Return Policy</li>
+                                            <li><i class="fi-rs-credit-card mr-5"></i> Cash on Delivery available</li>
+                                        </ul>
+                                    </div>
+                                  
+                                    <div class="bt-1 border-color-1 mt-30 mb-30"></div>
+                                    <div class="detail-extralink">
+                                        <!-- <div class="detail-qty border radius">
+                                            <a href="#" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>
+                                            <span class="qty-val">1</span>
+                                            <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
+                                        </div> -->
+                                        <div class="product-extra-link2">
+                                            <button type="submit" class="button button-add-to-cart" onclick="addToCart('<%=product._id%>','<%=product.stock%>')" >Add to cart</button>
+                                           
+                                            
+                                        </div>
+                                    </div>
+                                    <ul class="product-meta font-xs color-grey mt-50">
+                                        <!-- <li class="mb-5">SKU: <a href="#">FWM15VKT</a></li> -->
+                                        <li class="mb-5">Tags: <a href="#" rel="tag">Phone</a>, <a href="#" rel="tag"><%=product.category%></a>, <a href="#" rel="tag">Phones</a> </li>
+                                        <!-- <li>Availability:<span class="in-stock text-success ml-5">8 Items In Stock</span></li> -->
+                                    </ul>
+                                </div>
+                                <!-- Detail Info -->
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-10 m-auto entry-main-content">
+                                <h2 class="section-title style-1 mb-30">Description</h2>
+                                <div class="description mb-50">
+                                    <p>Uninhibited carnally hired played in whimpered dear gorilla koala depending and much yikes off far quetzal goodness and from for grimaced goodness unaccountably and meadowlark near unblushingly crucial scallop
+                                        tightly neurotic hungrily some and dear furiously this apart.</p>
+                                    <p>Spluttered narrowly yikes left moth in yikes bowed this that grizzly much hello on spoon-fed that alas rethought much decently richly and wow against the frequent fluidly at formidable acceptably flapped
+                                        besides and much circa far over the bucolically hey precarious goldfinch mastodon goodness gnashed a jellyfish and one however because.
+                                    </p>
+                                  
+                                    <hr class="wp-block-separator is-style-dots">
+                                    <p>Laconic overheard dear woodchuck wow this outrageously taut beaver hey hello far meadowlark imitatively egregiously hugged that yikes minimally unanimous pouted flirtatiously as beaver beheld above forward
+                                        energetic across this jeepers beneficently cockily less a the raucously that magic upheld far so the this where crud then below after jeez enchanting drunkenly more much wow callously irrespective limpet.</p>
+                                    <h4 class="mt-30">Packaging & Delivery</h4>
+                                    <hr class="wp-block-separator is-style-wide">
+                                    <p>Less lion goodness that euphemistically robin expeditiously bluebird smugly scratched far while thus cackled sheepishly rigid after due one assenting regarding censorious while occasional or this more crane
+                                        went more as this less much amid overhung anathematic because much held one exuberantly sheep goodness so where rat wry well concomitantly.
+                                    </p>
+                                    <p>Scallop or far crud plain remarkably far by thus far iguana lewd precociously and and less rattlesnake contrary caustic wow this near alas and next and pled the yikes articulate about as less cackled dalmatian
+                                        in much less well jeering for the thanks blindly sentimental whimpered less across objectively fanciful grimaced wildly some wow and rose jeepers outgrew lugubrious luridly irrationally attractively
+                                        dachshund.
+                                    </p>
+                                </div>
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<script>
+   
+    function addToCart(proId, stock) {
+        if (stock <= 0) {
+            Swal.fire({
+                icon: "error",
+                title: "Out of Stock",
+                text: "This product is currently out of stock.",
+            });
+        } else {
+            $.ajax({
+                url: "/add-cart/" + proId,
+                method: "POST",
+                success: (response) => {
+                    console.log(response, "response");
+                    if (response.status == true) {
+                        Swal.fire({
+                            title: "Added To Cart",
+                            text: "Your Product has been added to Cart",
+                            icon: "success",
+                            timer: 5000,
+                        }).then(() => {
+
+                            if (response.newStock !== undefined) {
+                                // Select the specific product card by its ID and update the stock
+                                const productStockElement = document.getElementById(`productStock_${proId}`);
+                                if (productStockElement) {
+                                    productStockElement.textContent = 'Available stock' + response.newStock;
+                                }
+                            }
+                        });
+
+                    }
+
+                     else {
+                        location.href = "/login";
+                    }
+                },
+                error: (error) => {
+                    console.error(error);
+                    Swal.fire({
+                        icon: "error",
+                        title: "Error",
+                        text: "An error occurred while adding the product to the cart.",
+                    });
+                },
+            });
+        }
+    }
+    </script>
+
+
+<%-include('../layouts/footer.ejs')%>

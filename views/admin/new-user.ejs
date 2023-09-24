@@ -1,0 +1,66 @@
+<%-include ('../layouts2/header.ejs')%>
+
+<section class="content-main">
+    <div class="row">
+        <div class="col-6">
+            <div class="content-header">
+                <h2 class="content-title">Add New   User</h2>
+                <div>
+                    <a href="/admin/Users">
+                    <button class="btn btn-light rounded font-sm mr-5 text-body hover-up">Back to List</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card mb-4">
+                <div class="card-body">
+                <form action="" method="post" enctype="multipart/form-data" >
+                    <div class="row">
+                        <div class="col-md-9">
+                            <div class="mb-4">
+                                <label class="form-label">Name</label>
+                                <input type="text" placeholder="Type here" id="name" name="name" class="form-control" required>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label">Email</label>
+                                <input type="text" placeholder="Type here" id="name" name="email" class="form-control" required>
+                            </div>
+                        </div> 
+                    </div> 
+                    <hr class="mb-4 mt-0">
+                    <div class="row">
+                        
+                        <div class="col-md-9">
+                            <div class="mb-4">
+                                <label class="form-label">Mobile No</label>
+                                <input type="text" id="mno" name="mno" placeholder="EnterMobile number" class="form-control">
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label">Password</label>
+                                <input type="password" id="password" name="password" placeholder="Enter The password" class="form-control" required>
+                            </div>
+                        </div> 
+                    </div> 
+                    <div class="row">
+                        <div class="col-md-9">
+                            <div class="mb-4">
+                                <label class="form-label">Images</label>
+                                <input  class="form-control"  name="image" type="file" required>
+                            </div>
+                        </div> 
+                    </div> 
+                    <input type="submit" class="btn btn-md rounded font-sm hover-up" value="Publish">
+                    </form>
+                    <% if (typeof message !== 'undefined') { %>
+                                <p style="color:red;"><%= message %></p>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+    
+<%-include ('../layouts2/footer.ejs')%>

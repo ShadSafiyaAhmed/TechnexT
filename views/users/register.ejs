@@ -1,0 +1,198 @@
+
+
+<!DOCTYPE HTML>
+<html lang="en">
+
+
+<head>
+    <meta charset="utf-8">
+    <title>TechnexT</title>
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:title" content="">
+    <meta property="og:type" content="">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">
+    <link rel="shortcut icon" type="image/x-icon" href="../assets2/imgs/theme/favicon.svg">
+    <link href="../assets2/css/main.css" rel="stylesheet" type="text/css" />
+    <style>
+        .error-message {
+            color: red;
+            font-size: 12px;
+            margin-top: 5px;
+            max-height: 20px;
+             
+        }
+
+        .card-login {
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+            padding:  30px;
+            max-width: 400px; 
+            margin: 10 auto;
+            overflow: hidden;
+        }
+
+    </style>
+    
+</head>
+
+<body>
+    <main>
+        <header class="main-header style-2 navbar">
+            <div class="col-brand">
+                <a href="index.html" class="brand-wrap">
+                    <img src="../assets2/imgs/theme/logo2.svg" class="logo" alt="TechnexT">
+                     
+                </a>
+            </div>
+            <div class="col-nav">
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a class="nav-link btn-icon darkmode" href="#"> <i class="material-icons md-nights_stay"></i> </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="requestfullscreen nav-link btn-icon"><i class="material-icons md-cast"></i></a>
+                    </li>
+                  
+                </ul>
+            </div>
+        </header>
+        <section class="content-main  ">
+            <div class="card mx-auto card-login">
+                <div class="card-body">
+                    <h4 class="card-title mb-6 ">Create an Account</h4>
+                    <form action="" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+                       
+                        <div class="mb-3">
+                            <input class="form-control" id="name" name="name" placeholder="Your Name " type="text" onkeyup="validateName()" required>
+                            <div class="error-message" id="nameError"></div>
+                        </div> 
+                        <div class="mb-3">
+                            <input class="form-control"  name="email"  id="emailInput" placeholder="Your email" type="text"oninput="validateEmail()"  required> 
+                            <div class="error-message" id="emailError"></div> 
+                        </div>
+                        <div class="mb-3">
+                            <div class="mb-3">
+                                 <input class="form-control"  id="phone" name="mno" placeholder="Phone" type="text" oninput="validatePhoneNumber()" required> 
+                                 <div class="error-message" id="phoneError"></div>
+
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <input class="form-control" name="image" type="file" required>
+                        </div>
+                        <div class="mb-3">
+                            <input class="form-control" placeholder="Password" name="password" type="password" oninput="validatePassword()" required>
+                            <div class="error-message" id="passwordError"></div>
+                        </div>
+                        <div class="mb-3">
+                            <input class="form-control" placeholder="confirmPassword" name="confirmpassword" type="password"  oninput="validateConfirmPassword()" required>
+                            <div class="error-message" id="confirmPasswordError"></div>
+                        </div> 
+
+                    
+                        
+                        <div class="mb-4">
+                            <input type="submit" class="btn btn-primary w-100">
+                            <p style="color:green" class="text-center mb-2">
+                                <%=(typeof message!=='undefined')?message:""%></p> 
+                        </div> 
+                   
+                    </form>
+                    <p class="text-center mb-2">Already have an account? <a href="/login">Sign in now</a></p>
+                </div>
+            </div>
+
+        </section>
+
+
+     
+    </main>
+    <script src="../assets2/js/vendors/jquery-3.6.0.min.js"></script>
+    <script src="../assets2/js/vendors/bootstrap.bundle.min.js"></script>
+    <script src="../assets2/js/vendors/jquery.fullscreen.min.js"></script>
+    <script src="../assets2/js/main.js" type="text/javascript"></script>
+    
+    <script>
+        function validateName() {
+            const nameInput = document.getElementById("name");
+            const nameValue = nameInput.value;
+
+            if (!/^[A-Z][a-zA-Z]*$/.test(nameValue)) {
+                document.getElementById("nameError").innerText = "Name should start with a capital letter No.";
+            } else {
+                document.getElementById("nameError").innerText = "";
+            }
+        }
+        function validateEmail() {
+        const emailInput = document.getElementById("emailInput");
+        const emailValue = emailInput.value;
+
+        if (!/^[A-Za-z0-9._%+-]+@gmail\.com$/i.test(emailValue)) {
+            document.getElementById("emailError").innerText = "provide valid Gmail address (e.g., example@gmail.com).";
+        } else {
+            document.getElementById("emailError").innerText = "";
+        }
+    }
+
+        function validatePhoneNumber() {
+            const phoneInput = document.getElementById("phone");
+            const phoneValue = phoneInput.value;
+
+            if (!/^\+\d{12}$/.test(phoneValue)) {
+                document.getElementById("phoneError").innerText = "Please enter a valid phone number with country code (e.g., +91123456789).";
+            } else {
+                document.getElementById("phoneError").innerText = "";
+            }
+        }
+
+        function validatePassword() {
+            const passwordInput = document.querySelector("input[name='password']");
+            const passwordValue = passwordInput.value;
+
+            if (passwordValue.length < 8) {
+                document.getElementById("passwordError").innerText = "Password should be at least 8 characters long.";
+            } else {
+                document.getElementById("passwordError").innerText = "";
+            }
+        }
+
+        function validateConfirmPassword() {
+        const passwordInput = document.querySelector("input[name='password']");
+        const confirmPasswordInput = document.querySelector("input[name='confirmpassword']");
+        const passwordValue = passwordInput.value;
+        const confirmPasswordValue = confirmPasswordInput.value;
+
+        if (passwordValue !== confirmPasswordValue) {
+            document.getElementById("confirmPasswordError").innerText = " Both Passwords  do not match.";
+        } else {
+            document.getElementById("confirmPasswordError").innerText = "";
+        }
+      }
+
+
+        function validateForm() {
+            validateName();
+            validatePhoneNumber();
+            validatePassword();
+            validateConfirmPassword();
+            validateEmail();
+
+            const errorMessages = document.getElementsByClassName("error-message");
+            for (const errorMessage of errorMessages) {
+                if (errorMessage.innerText !== "") {
+                    errorMessage.style.visibility = "visible"; 
+                    return false; 
+
+                }
+            }
+
+            return true;
+        }
+    </script>
+       
+</body>
+</html>
+
+

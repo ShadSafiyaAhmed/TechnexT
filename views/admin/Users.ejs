@@ -1,0 +1,88 @@
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+<%-include ('../layouts2/header.ejs')%>
+<section class="content-main">
+    <div class="content-header">
+        <div>
+            <h2 class="content-title card-title">Users List</h2>
+            <p>Lorem ipsum dolor sit amet.</p>
+        </div>
+    </div>
+    <div class="card mb-4">
+        <div class="table-responsive">
+            <% if(users.length > 0) { %>
+            <table class="table table-striped table-hover" id="myTable">
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Mobile No</th>
+                        <th>Verified</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for(let i=0; i<users.length; i++) { %>
+                        <tr>
+                            <td class="text-center align-middle"> <!-- Properly centering image -->
+                                <div class="left">
+                                    <img src="/userImages/<%=users[i].image%>" class="img-sm img-thumbnail" alt="<%=users[i].image%>" width="50px" height="50px">
+                                </div>
+                            </td>
+                            <td class="align-middle">
+                                <a class="itemside" href="#">
+                                    <h6 class="mb-0"> <%= users[i].name %></h6>
+                                </a>
+                            </td>
+                            <td class="align-middle"> <!-- Replacing textarea with normal input field -->
+                                <input type="text" name="email" class="form-control" value="<%= users[i].email %>">
+                            </td>
+                            <td class="align-middle"><%= users[i].mobile %></td>
+                            <td class="align-middle text-center"> <!-- Centering the text -->
+                                <% if (users[i].is_verified == 0) { %>
+                                    <p>Not verified</p>
+                                <% } else { %>
+                                    <p>Verified</p>
+                                <% } %>  
+                            </td> 
+                            <td class="align-middle text-center"> <!-- Centering the text -->
+                                <%if(users[i].blocked==true){%>
+                                <span class="badge rounded-pill alert-danger">Blocked</span>  
+                                <%}else{%>
+                                    <span class="badge rounded-pill alert-success">Active</span> 
+                                <%}%>
+                            </td> 
+                            <td class="text-middle">
+                                <!-- <a href="/admin/edit-user?id=<%= users[i]._id %>" class="btn btn-sm font-sm rounded btn-brand">
+                                    <i class="material-icons md-edit"></i> Edit
+                                </a> -->
+                                <a href="/admin/delete-user?id=<%= users[i]._id %>" class="btn btn-sm font-sm btn-light rounded">
+                                    <i class="material-icons md-delete_forever"></i>
+                                </a>
+                                <div class="dropdown">
+                                    <a href="#" data-bs-toggle="dropdown" class="btn btn-light rounded btn-sm font-sm"> <i class="material-icons md-more_horiz"></i> </a>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="/admin/blockinguser?id=<%=users[i]._id%>">block</a>
+                                        <a class="dropdown-item" href="/admin/unblockuser?id=<%=users[i]._id%>">Unblock</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+            <% } else { %>
+                <p>User Not found</p>
+            <% } %>
+        </div>
+    </div>   
+</section>
+<%-include ('../layouts2/footer.ejs')%>
+<script>
+    $(document).ready(function () {
+        $('#myTable').DataTable();
+    });
+</script>
+<script src="//cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+  

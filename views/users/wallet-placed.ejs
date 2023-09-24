@@ -1,0 +1,178 @@
+<%- include('../layouts/header.ejs') %>
+<style>
+.card {
+    display: inline-block;
+    width: auto; 
+    margin: 0;
+}
+.table {
+    width: 100%;
+}
+.table-container {
+    width: 100% 
+}
+.table-responsive {
+    margin-bottom: 20px;
+}
+.table thead th {
+    background-color: #f5f5f5;
+    border-bottom: 2px solid #ddd;
+    text-align: center;
+    padding: 10px;
+}
+.table tbody td {
+    vertical-align: middle;
+    padding: 10px;
+    white-space: nowrap;
+}
+.order-status {
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+.order-placed {
+    background-color: #17a2b8;
+    color: #fff;
+}
+.order-delivered {
+    background-color: #28a745;
+    color: #fff;
+}
+.order-requested-return {
+    background-color: #ffc107;
+    color: #333;
+}
+.order-returned {
+    background-color: #dc3545;
+    color: #fff;
+}
+.order-cancelled {
+    background-color: #6c757d;
+    color: #fff;
+}
+.order-dispatched {
+    background-color: #007bff;
+    color: #fff;
+}
+.action-button {
+    display: inline-block;
+    margin-right: 5px;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-decoration: none;
+    color: #333;
+}
+.btn-brand {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    text-decoration: none;
+}
+.align-middle {
+    text-align: center;
+}
+.action-button {
+    background-color: #031a33;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.3 ease, color 0.3 ease;
+}
+.action-button:hover {
+    background-color: #ada7a7;
+    color: #031a33;
+}
+</style>
+
+
+<section class="pt-100 pb-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 m-auto">
+                <div class="row">
+                    <!-- Dashboard Menu -->
+                    <div class="col-md-4">
+                        <div class="dashboard-menu">
+                            <ul class="nav flex-column" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link" id="dashboard-tab" href="/dashboard" role="tab" aria-controls="dashboard" aria-selected="false">
+                                        <i class="fi-rs-settings-sliders mr-10"></i>Dashboard
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="profile-tab" href="/profileDetails" role="tab" aria-controls="profile" aria-selected="false">
+                                        <i class="fi-rs-user mr-10"></i>User Profile
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="orders-tab" href='/orderList' role="tab" aria-controls="orders" aria-selected="true">
+                                        <i class="fi-rs-shopping-cart mr-10"></i>Your Orders
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="address-tab" href="/profileAddress" role="tab" aria-controls="address" aria-selected="true">
+                                        <i class="fi-rs-marker mr-10"></i>My Address
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="Transaction-tab" href="/wallet-placed" role="tab" aria-controls="wallet" aria-selected="true">
+                                        <i class="fi-rs-user mr-10"></i>Transactions
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Transaction Table -->
+                    <div class="col-md-8">
+                        <div class="tab-content dashboard-content">
+                            <table class="table table-responsive">
+                                <thead>
+                                    <tr>
+                                        <th>Sl No</th>
+                                        <th>Date</th>
+                                        <th>Amount</th>
+                                        <th>Transaction Type</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% wallet.forEach(function(wallet, index) { %>
+                                        <tr>
+                                            <td><%= index + 1 %></td>
+                                            <td><%= wallet.walletTransaction.date.toLocaleString() %></td>
+                                            <td>₹ <%= wallet.walletTransaction.amount %></td>
+                                            <% if (wallet.walletTransaction.type === "Credit") { %>
+                                                <td><span class="order-status order-placed">Credit</span></td>
+                                            <% } else { %>
+                                                <td><span class="order-status order-cancelled">Debit</span></td>
+                                            <% } %>
+                                        </tr>
+                                    <% }) %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<%- include('../layouts/footer.ejs') %>
+
+<!-- JavaScript Imports -->
+<script src="../theme/plugins/jquery/dist/jquery.min.js"></script>
+<script src="../theme/plugins/bootstrap/js/bootstrap.min.js"></script>
+<script src="../theme/plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js"></script>
+<script src="../theme/plugins/instafeed/instafeed.min.js"></script>
+<script src="../theme/plugins/ekko-lightbox/dist/ekko-lightbox.min.js"></script>
+<script src="../theme/plugins/syo-timer/build/jquery.syotimer.min.js"></script>
+<script src="../theme/plugins/slick/slick.min.js"></script>
+<script src="../theme/plugins/slick/slick-animation.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCC72vZw-6tGqFyRhhg5CkF2fqfILn2Tsw"></script>
+<script type="text/javascript" src="../theme/plugins/google-map/gmap.js"></script>
+<script src="../theme/js/script.js"></script>

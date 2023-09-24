@@ -1,0 +1,166 @@
+<%- include('../layouts/header.ejs') %>
+<style>
+
+
+    .card {
+        display: inline-block; /* Make the card inline-block */
+        width: auto; /* Set width to auto to match the content width */
+        margin: 0; /* Optionally, remove any margin */
+    }
+
+
+/* Style the table to be responsive */
+.table {
+    width: 100%;
+}
+.table-container {
+    width: 100%; /* You can adjust the width as needed */
+}
+
+
+/* Add some spacing around the table */
+.table-responsive {
+    margin-bottom: 20px;
+}
+
+/* Style the table header */
+.table thead th {
+    background-color: #f5f5f5;
+    border-bottom: 2px solid #ddd;
+    text-align: center;
+    padding: 10px;
+}
+
+/* Style the table rows */
+.table tbody td {
+    vertical-align: middle;
+    padding: 10px;
+    white-space: nowrap;
+}
+
+/* Add different colors for different order statuses */
+.order-status {
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.order-placed {
+    background-color: #17a2b8;
+    color: #fff;
+}
+
+.order-delivered {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.order-requested-return {
+    background-color: #ffc107;
+    color: #333;
+}
+
+.order-returned {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.order-cancelled {
+    background-color: #6c757d;
+    color: #fff;
+}
+
+.order-dispatched {
+    background-color: #007bff;
+    color: #fff;
+}
+
+/* Style action buttons */
+.action-button {
+    display: inline-block;
+    margin-right: 5px;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-decoration: none;
+    color: #333;
+}
+
+/* Style view details button */
+.btn-brand {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    text-decoration: none;
+}
+
+/* Center align the buttons */
+.align-middle {
+    text-align: center;
+}
+
+.action-button {
+        background-color: #031a33;
+        color: #fff;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 4px;
+        text-decoration: none;
+        transition: background-color 0.3 ease, color 0.3 ease;
+    }
+
+    .action-button:hover {
+        background-color: #ada7a7;
+        color: #031a33;
+    }
+</style>
+
+
+<section class="pt-100 pb-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 m-auto">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="dashboard-menu">
+                            <ul class="nav flex-column" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="dashboard-tab" href="/dashboard" role="tab" aria-controls="dashboard" aria-selected="false"><i class="fi-rs-settings-sliders mr-10"></i>Dashboard</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="profile-tab" href="/profileDetails" role="tab" aria-controls="profile" aria-selected="false"><i class="fi-rs-user mr-10"></i>User Profile</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="orders-tab" href='/orderList' role="tab" aria-controls="orders" aria-selected="true"><i class="fi-rs-shopping-cart mr-10"></i>Your Orders</a>
+                                </li>                                
+                                <li class="nav-item">
+                                    <a class="nav-link" id="address-tab" href="/profileAddress" role="tab" aria-controls="address" aria-selected="true"><i class="fi-rs-marker mr-10"></i>My Address</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link " id="Transaction-tab" href="/wallet-placed" role="tab" aria-controls="wallet" aria-selected="true"><i class="fi-rs-user mr-10"></i>Transactions</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="tab-content dashboard-content">
+                            <div class="tab-pane fade active show" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="mb-0">Hello <%= user.name %> </h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>From your account dashboard. you can easily check &amp; view your <a href="#">recent orders</a>, manage your <a href="#">shipping and billing addresses</a> and <a href="#">edit your password and account details.</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<%- include('../layouts/footer.ejs') %>

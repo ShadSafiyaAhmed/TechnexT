@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html>
+<%-include('../layouts/header.ejs')%>
+
+    <style>
+        /* CSS styles for the popup form */
+        .form-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #f8f8f8;
+            border-radius: 0px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+            z-index: 10000;
+            padding: 40px;
+            color: #000000;
+            overflow-y: auto;
+            max-height: 80vh;
+        }
+
+        .form-container {
+            height: 100%;
+        }
+
+        .form-popup input[type="text"],
+        .form-popup input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: none;
+        }
+
+        .form-popup .btn-group {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .form-popup .btn {
+            margin-left: 10px;
+        }
+
+        .form-popup::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .form-popup::-webkit-scrollbar-track {
+            background-color: #f1f1f1;
+        }
+
+        .form-popup::-webkit-scrollbar-thumb {
+            background-color: #888;
+        }
+
+        .form-popup::-webkit-scrollbar-thumb:hover {
+            background-color: #555;
+        }
+    </style>
+
+
+
+
+
+<section class="pt-100 pb-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 m-auto">
+                <div class="row">
+                    <!-- Dashboard Menu -->
+                    <div class="col-md-4">
+                        <div class="dashboard-menu">
+                            <ul class="nav flex-column" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link" id="dashboard-tab" href="/dashboard" role="tab" aria-controls="dashboard" aria-selected="false">
+                                        <i class="fi-rs-settings-sliders mr-10"></i>Dashboard
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link " id="profile-tab" href="/profileDetails" role="tab" aria-controls="profile" aria-selected="true">
+                                        <i class="fi-rs-user mr-10"></i>User Profile
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="orders-tab" href="/orderList" role="tab" aria-controls="orders" aria-selected="false">
+                                        <i class="fi-rs-shopping-cart mr-10"></i>Your Orders
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="address-tab" href="/profileAddress" role="tab" aria-controls="address" aria-selected="true">
+                                        <i class="fi-rs-marker mr-10"></i>My Address
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="Transaction-tab" href="/wallet-placed" role="tab" aria-controls="wallet" aria-selected="false">
+                                        <i class="fi-rs-user mr-10"></i>Transactions
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Address Table -->
+                    <div class="col-md-8">
+                        <div class="tab-content dashboard-content">
+                            <div class="table-responsive">
+                                <table class="table table-responsive">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Mobile Number</th>
+                                            <th>Address</th>
+                                            <th>Postal Code</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% array.forEach((address) => { %>
+                                            <tr>
+                                                <td><%= address.name %></td>
+                                                <td><%= address.mobile %></td>
+                                                <td><%= address.homeAddress %>, <%= address.street %>, <%= address.city %></td>
+                                                <td><%= address.postalCode %></td>
+                                                <td>
+                                                    <div class="btn-group" role="group">
+                                                        <button type="button" class="btn btn-default" onclick="editAddress(<%= JSON.stringify(address) %>)">
+                                                            <i class="tf-pencil2" aria-hidden="true"> Edit</i>
+                                                        </button>
+                                                        <span style="margin-right: 10px;"></span> <!-- Add space here -->
+                                                        <button type="button" class="btn btn-danger" onclick="deleteAddress('<%= address._id %>')">
+                                                            <i class="tf-trash" aria-hidden="true"> Delete</i>
+                                                        </button>
+                                                    </div>  
+                                                </td>
+                                            </tr>
+                                        <% }) %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center" style="margin-top: 20px;">
+                    <button type="button" class="btn btn-primary" onclick="addAddress()">Add Address</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+        <!-- Popup form HTML edit address -->
+        <div class="form-popup" id="popupForm">
+            <div class="form-container">
+                <h3>Edit Adresss</h3>
+                <input type="hidden" id="idInput" placeholder="Name">
+
+                <input type="text" id="nameInput" placeholder="Name">
+                <input type="text" id="mobileNumberInput" placeholder="Mobile Number">
+                <input type="text" id="addressInput" placeholder="Home Address">
+                <input type="text" id="localityInput" placeholder="Street">
+                <input type="text" id="cityInput" placeholder="City">
+                <input type="text" id="pincodeInput" placeholder="Postal Code">                
+                <div class="btn-group">
+                    <button type="button" class="btn" onclick="closePopupedit()">Close</button>
+                    <button type="button" class="btn" onclick="saveAddressedit()">Save</button>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Popup form HTML add address -->
+        <div class="form-popup" id="popupFormadd">
+            <div class="form-container">
+                <h3>Add Adresss</h3>
+                <input type="hidden" id="idInput" placeholder="Name">
+
+                <input type="text" id="nameInputadd" placeholder="Name">
+                <input type="text" id="mobileNumberInputadd" placeholder="Mobile Number">
+                <input type="text" id="addressInputadd" placeholder="Home Address">
+                <input type="text" id="localityInputadd" placeholder="Street">
+                <input type="text" id="cityInputadd" placeholder="City">
+                <input type="text" id="pincodeInputadd" placeholder="Postal Code">
+                <div class="btn-group">
+                    <button type="button" class="btn" onclick="closePopup()">Close</button>
+                    <button type="button" class="btn" onclick="saveAddress()">Save</button>
+                </div>
+            </div>
+        </div>
+   
+    <!-- 
+    Essential Scripts
+    =====================================-->
+
+    <!-- Main jQuery -->
+    <script src="plugins/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap 3.1 -->
+    <script src="plugins/bootstrap/js/bootstrap.min.js"></script>
+    <!-- Bootstrap Touchpin -->
+    <script src="plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js"></script>
+    <!-- Instagram Feed Js -->
+    <script src="plugins/instafeed/instafeed.min.js"></script>
+    <!-- Video Lightbox Plugin -->
+    <script src="plugins/ekko-lightbox/dist/ekko-lightbox.min.js"></script>
+    <!-- Count Down Js -->
+    <script src="plugins/syo-timer/build/jquery.syotimer.min.js"></script>
+
+    <!-- slick Carousel -->
+    <script src="plugins/slick/slick.min.js"></script>
+    <script src="plugins/slick/slick-animation.min.js"></script>
+
+    <!-- Google Mapl -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCC72vZw-6tGqFyRhhg5CkF2fqfILn2Tsw"></script>
+    <script type="text/javascript" src="plugins/google-map/gmap.js"></script>
+
+    <!-- Main Js File -->
+    <script src="js/script.js"></script>
+    <script>
+        function editAddress(address) {
+            console.log("here", address);
+
+            // Populate the form inputs with the address details
+            document.getElementById("idInput").value = address._id;
+            document.getElementById("nameInput").value = address.name;
+            document.getElementById("mobileNumberInput").value = address.mobile;
+            document.getElementById("addressInput").value = address.homeAddress;
+            document.getElementById("localityInput").value = address.street;
+            document.getElementById("cityInput").value = address.city;
+            document.getElementById("pincodeInput").value = address.postalCode;
+            // Show the popup form
+            var popupForm = document.getElementById("popupForm");
+            popupForm.style.display = "block";
+        }
+
+        function closePopupedit() {
+            // Close the popup form
+            var popupForm = document.getElementById("popupForm");
+            popupForm.style.display = "none";
+        }
+
+        function saveAddressedit() {
+            // Get the input values
+            var id = document.getElementById("idInput").value;
+            var name = document.getElementById("nameInput").value;
+            var mobile = document.getElementById("mobileNumberInput").value;
+            var homeAddress = document.getElementById("addressInput").value;
+            var street = document.getElementById("localityInput").value;
+            var city = document.getElementById("cityInput").value;
+            var postalCode = document.getElementById("pincodeInput").value;
+            // Validate the input values
+            if (name.trim() === "") {
+                alert("Name cannot be empty");
+                return;
+            }
+            if (!/^[a-zA-Z ]+$/.test(name)) {
+                alert("Name should not contain numbers or special characters");
+                return;
+            }
+            if (mobile.trim() === "") {
+                alert("Mobile Number cannot be empty");
+                return;
+            }
+            if (!/^\+?\d{1,12}$/.test(mobile)) {
+                alert("Mobile Number should contain a maximum of 12 numbers only");
+                return;
+            }
+            if (homeAddress.trim() === "") {
+                alert("Address cannot be empty");
+                return;
+            }
+            if (street.trim() === "") {
+                alert("Street cannot be empty");
+                return;
+            }
+            if (city.trim() === "") {
+                alert("City cannot be empty");
+                return;
+            }
+            if (postalCode.trim() === "") {
+                alert("Postal Code cannot be empty");
+                return;
+            }
+            if (!/^\d{6}$/.test(postalCode)) {
+                alert("Pincode should contain exactly 6 digits");
+                return;
+            }
+
+            var formData = {
+                id: id,
+                name: name,
+                mobile: mobile,
+                homeAddress: homeAddress,
+                street: street,
+                city: city,
+                postalCode: postalCode,
+            };
+
+            // Send the form data to the server using AJAX
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/updateAddress", true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                    // Reload the section of the address table
+                    var addressTableSection = document.getElementById("addressTableSection");
+                    addressTableSection.innerHTML = xhr.responseText;
+                }
+            };
+            xhr.send(JSON.stringify(formData));
+
+            closePopupedit();
+            location.reload();
+        }
+
+        //delete address
+        function deleteAddress(address) {
+            // Create an object with the address ID
+            var formData = {
+                addressId: address
+            };
+
+            // Send the form data to the server using AJAX
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/deleteAddress", true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                    // Update the specific area with the response from the server
+                    var addressTableRow = document.getElementById("addressTableRow_" + addressId);
+                    var newAddressTableRow = xhr.responseText;
+
+                    // Replace the old address table row with the updated one
+                    if (addressTableRow && newAddressTableRow) {
+                        var tempElement = document.createElement('tr');
+                        tempElement.innerHTML = newAddressTableRow;
+                        addressTableRow.parentNode.replaceChild(tempElement.firstChild, addressTableRow);
+                    }
+                }
+            };
+            xhr.send(JSON.stringify(formData));
+            location.reload();
+        }
+    </script>
+
+<!-- add address -->
+
+
+
+<script>
+    function addAddress() {
+  // Show the popup form
+  document.getElementById("popupFormadd").style.display = "block";
+}
+
+function closePopup() {
+  // Close the popup form
+  document.getElementById("popupFormadd").style.display = "none";
+}
+
+function saveAddress() {
+  // Get the form data
+  var name = document.getElementById("nameInputadd").value;
+  var mobile = document.getElementById("mobileNumberInputadd").value;
+  var homeAddress = document.getElementById("addressInputadd").value;
+  var street = document.getElementById("localityInputadd").value;
+  var city = document.getElementById("cityInputadd").value;
+  var postalCode = document.getElementById("pincodeInputadd").value;
+
+            // Validate the input values
+            if (name.trim() === "") {
+                alert("Name cannot be empty");
+                return;
+            }
+            if (!/^[a-zA-Z ]+$/.test(name)) {
+                alert("Name should not contain numbers or special characters");
+                return;
+            }
+            if (mobile.trim() === "") {
+                alert("Mobile Number cannot be empty");
+                return;
+            }
+            if (!/^\+?\d{1,12}$/.test(mobile)) {
+                alert("Mobile Number should contain a maximum of 12 numbers only");
+                return;
+            }
+            if (homeAddress.trim() === "") {
+                alert("Address cannot be empty");
+                return;
+            }
+            if (street.trim() === "") {
+                alert("Street cannot be empty");
+                return;
+            }
+            if (city.trim() === "") {
+                alert("City cannot be empty");
+                return;
+            }
+            if (postalCode.trim() === "") {
+                alert("Postal Code cannot be empty");
+                return;
+            }
+            if (!/^\d{6}$/.test(postalCode)) {
+                alert("Pincode should contain exactly 6 digits");
+                return;
+            }
+            
+
+  // Create a data object to send in the AJAX request
+  var data = {
+    name: name,
+    mobile: mobile,
+    homeAddress: homeAddress,
+    street: street,
+    city: city,
+    postalCode: postalCode,
+  };
+
+  // Make an AJAX call to the "/addaddress" URL
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", "/submitAddress", true);
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+      // Request completed successfully
+      console.log(xhr.responseText); // You can do something with the response here
+      closePopup(); // Close the popup form after successful save
+    }
+  };
+  xhr.send(JSON.stringify(data));
+  location.reload()
+
+}
+
+</script>
+
+    </body>
+    <%-include('../layouts/footer.ejs')%>
+
+    </html>

@@ -1,0 +1,72 @@
+<%-include('../layouts2/header.ejs')%>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+
+<section class="content-main">
+    <div class="content-header">
+        <div>
+            <h2 class="content-title card-title">Order List </h2>
+            <p>You can check the user Orders Here</p>
+        </div>
+    
+    </div>
+    <div class="card mb-4">
+        <header class="card-header">
+            
+        </header> 
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover" id="myTable">
+                    <thead>
+                        <tr>
+                            <th> Order-ID</th>    
+                        
+                            <th scope="col">Name</th>
+                            <th scope="col">Total</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Date</th>
+                            <th scope="col" class="text-end"> Action </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <%userOrder.forEach(order=>{%>
+                        <tr>
+                            <td><b><%=order._id%></b></td>
+                            <td><b><%=order.addressDetails.name%></b></td>
+                            <td><%=order.total%></td>
+                            <td><span class="badge rounded-pill alert-warning"><%=order.status%></span></td>
+                            <td><%= order.createdAt.toLocaleDateString() %></td>
+
+                            <td class="text-end">
+                                <a href="/admin/orderDetails?id=<%=order._id%>" class="btn btn-md rounded font-sm">Detail</a>
+                                <div class="dropdown">
+                                    <a href="#" data-bs-toggle="dropdown" class="btn btn-light rounded btn-sm font-sm"> <i class="material-icons md-more_horiz"></i> </a>
+                                    <div class="dropdown-menu">
+                
+                                    <%if(order.status==='Placed'){%>
+                                            <a class="dropdown-item" href="/admin/updateStatus?id=<%= order._id %>&status=Dispatched" >Dispatch Order</a>
+                                            <%}else if(order.status==='Dispatched'){%>
+                                            <a class="dropdown-item" href="/admin/updateStatus?id=<%= order._id %>&status=Delivered">delivered</a>
+                                            <%}else if(order.status==='Requested Return'){%>
+                                                <a class="dropdown-item" href="/admin/acceptReturn?id=<%=order.id%>">Accept</a>
+                                                <a class="dropdown-item" href="/admin/DeclineReturn?id=<%order.id%>">Decline</a>  
+                                        <%}%>
+
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <%})%>
+                    </tbody>
+                </table>
+            </div> 
+        </div> 
+    </div> 
+</section>
+
+<script>
+    $(document).ready( function () {
+    $('#myTable').DataTable();
+} );
+</script>
+<script src="//cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<%include('../layouts2/footer.ejs')%>

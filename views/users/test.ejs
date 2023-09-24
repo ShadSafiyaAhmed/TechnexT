@@ -1,0 +1,166 @@
+<script>
+    function proceedToPayment() {
+        event.preventDefault()
+        $.ajax({
+            url: "/confirmOrder",
+            method: 'POST',
+            data: $('#checkOut-form').serialize(),
+            success: (response) => {
+                console.log(response, '+++++=========== ');
+                if (response.error) {
+                    console.log(response, 'error--------------------------------');
+
+                    console.log(response.error.message, '---------------');
+                    Swal.fire({
+                        title: 'Error!',
+                        text: response.error,
+                        icon: 'error',
+                        timer: 5000
+                    })
+                } else if (response.codStatus == true ||  response.orderStatus== true ) {
+                    console.log("res" + response.codStatus)
+                    console.log(response, 'status');
+                    Swal.fire({
+                        title: 'Order Placed!',
+                        text: 'Your order has been placed successfully.',
+                        icon: 'success',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'View Order',
+                        cancelButtonText: 'Continue Shopping'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            location.href = '/orderSlip';
+                        } else {
+                            location.href = '/home';
+                        }
+                    });
+
+                } else if (response.order.status === "created") {
+
+
+                  
+                    console.log(response.order);
+
+                    rezorpayPayment(response.order)
+
+                }
+
+
+
+
+            }
+        })
+    }
+
+    function rezorpayPayment(order) {
+
+        console.log("here", order.amount);
+
+
+
+
+        console.log("rezorpayPayment");
+
+
+        var options = {
+
+
+            "key": "rzp_test_ujleQwkkyHB5vp", // Enter the Key ID generated from the Dashboard
+            "amount": order.amount * 100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+            "currency": "INR",
+            "name": "Audiogalore",
+            "description": "Test Transaction",
+            "image": "https://example.com/your_logo",
+            "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+            "handler": function (response) {
+                // alert(response.razorpay_payment_id);
+                // alert(response.razorpay_order_id);
+                // alert(response.razorpay_signature)
+
+
+
+                verifyPayment(response, order)
+            },
+
+            "modal": {
+                "ondismiss": function() {
+                    console.log('Payment window closed');
+                    paymentFailed(order);
+                }
+                },
+
+
+
+
+
+            "prefill": {
+                "name": "Gaurav Kumar",
+                "email": "gaurav.kumar@example.com",
+                "contact": "9000090000"
+            },
+            "notes": {
+                "address": "Razorpay Corporate Office"
+            },
+            "theme": {
+                "color": "#3399cc"
+            }
+        };
+
+        var rzp1 = new Razorpay(options);
+        rzp1.on('payment.failed', function (response) {
+            alert(response.error.code);
+            alert(response.error.description);
+            alert(response.error.source);
+            alert(response.error.step);
+            alert(response.error.reason);
+            alert(response.error.metadata.order_id);
+            alert(response.error.metadata.payment_id);
+        });
+        rzp1.open();
+
+
+
+    }
+
+
+    function verifyPayment(payment, order) {
+
+        console.log("iam here");
+        $.ajax({
+            url: "/verifyPayment",
+            data: {
+                payment,
+                order
+            },
+            method: "post",
+            success: (response) => {
+
+                if (response.status) {
+                    Swal.fire({
+                        title: 'Order Placed!',
+                        text: 'Your order has been placed successfully.',
+                        icon: 'success',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'View Order',
+                        cancelButtonText: 'Continue Shopping'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            location.href = '/orderSlip';
+                        } else {
+                            location.href = '/home';
+                        }
+                    });
+                } else {
+                    alert("payment failed")
+                }
+
+            }
+
+        })
+    }
+
+</script>

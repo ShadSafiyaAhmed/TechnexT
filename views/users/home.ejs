@@ -1,0 +1,236 @@
+<%- include('../layouts/header.ejs') %>
+
+<style>
+    .red-text {
+    color: red;
+    font-weight: bold; /* You can adjust the font weight as needed */
+}
+
+</style>
+  <!-- Template CSS -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.min.js"></script>
+
+<main class="main">       
+    <section class="home-slider position-relative pt-50">
+        <div class="hero-slider-1 dot-style-1 dot-style-1-position-1">
+            <div class="single-hero-slider single-animation-wrap">
+                <div class="container">
+                    <div class="row align-items-center slider-animated-1">
+                        <div class="col-lg-5 col-md-6">
+                            <div class="hero-slider-content-2">
+                                <h4 class="animated">Trade-in offer</h4>
+                                <h2 class="animated fw-900">Supper value deals</h2>
+                                <h1 class="animated fw-900 text-brand">On all products</h1>
+                                <p class="animated">Save more with coupons & up to 70% off</p>
+                                <a class="animated btn btn-brush btn-brush-3" href="shop-product-right.html"> Shop Now </a>
+                            </div>
+                        </div>
+                        <div class="col-lg-7 col-md-6">
+                            <div class="single-slider-img single-slider-img-1">
+                                <img class="animated slider-1-1" src="../assets/imgs/slider/slider-10.png" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <%Banners.forEach(banner=>{%>
+              <%if(!banner.unlist){%>
+            <div class="single-hero-slider single-animation-wrap">
+                <div class="container">
+                    <div class="row align-items-center slider-animated-1">
+                        <div class="col-lg-5 col-md-6">
+                            <div class="hero-slider-content-2">
+                                <h4 class="animated"><%=banner.name%></h4>
+                                <h2 class="animated fw-900"><%=banner.discription %></h2>
+                                <h1 class="animated fw-900 text-7">Great Collection</h1>
+                                <p class="animated">Save more with coupons & up to 20% off</p>
+                                <a class="animated btn btn-brush btn-brush-2" href="shop-product-right.html"> Discover Now </a>
+                            </div>
+                        </div>
+                        <div class="col-lg-7 col-md-6">
+                            <div class="single-slider-img single-slider-img-1">
+                                <img class="animated slider-1-2" src="/BannerImages/<%= banner.image %>" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <% }  %>
+            <%})%>
+
+            <!-- More slides go here ... -->
+        </div>
+        <div class="slider-arrow hero-slider-1-arrow"></div>
+    </section>
+
+    <section class="product-tabs section-padding position-relative wow fadeIn animated">
+        <div class="bg-square"></div>
+        <div class="container">
+            <!-- Tabs go here ... -->
+            <div class="tab-content wow fadeIn animated" id="myTabContent">
+                <div class="tab-pane fade show active" id="tab-one" role="tabpanel" aria-labelledby="tab-one">
+                    <div class="row product-grid-4">
+                        <% products.forEach(product => { %>
+                            <% if (product.unlist !== true) { %>
+                                <div class="col-lg-3 col-md-4 col-12 col-sm-6">
+                                    <div class="product-cart-wrap mb-30">
+                                        <div class="product-img-action-wrap">
+                                            <div class="product-img product-img-zoom">
+                                                <a href="/productDetails?id=<%=product._id%>">
+                                                    <img class="default-img" src="/productImages/<%=product.images[0]%>" alt="">
+                                                    <img class="hover-img" src="/productImages/<%=product.images[2]%>" alt=""> 
+                                                </a>
+                                            </div>  
+                                            <div class="product-action-1">
+                                                <% if (product.stock <= 0) { %>
+                                                    <span class="out-of-stock-label red-text">Out of Stock</span>
+                                                <% } else { %>
+                                                    <a aria-label="Add To Wishlist" class="action-btn hover-up" onclick="addToWishList('<%=product._id%>')"><i class="fi-rs-heart"></i></a>
+                                                <% } %>
+                                            </div>
+                                            <div class="product-badges product-badges-position product-badges-mrg">
+                                                <span class="hot">new</span>
+                                            </div>
+                                        </div>
+                                        <div class="product-content-wrap">
+                                            <div class="product-category">
+                                                <a href="shop-grid-right.html"><%= product.category %></a>
+                                            </div>
+                                            <h2><a href="shop-product-right.html"><%=product.name %></a></h2>
+                                            <% if (product.stock <= 0) { %>
+                                                <span class="out-of-stock-label red-text">Out of Stock</span>
+                                            <% } else { %>
+                                                <span>
+                                                    <span id="productStock_<%= product._id %>">Available only <%=product.stock%> items</span>
+                                                </span>
+                                            <% } %>
+                                            <div class="product-price">
+                                                <span>₹<%=product.price %></span>
+                                                <span class="old-price"></span>
+                                            </div>
+                                            <% if (product.stock > 0) { %>
+                                                <div class="product-action-1 show">
+                                                    <a aria-label="Add To Cart" class="action-btn hover-up" onclick="addToCart('<%=product._id%>','<%=product.stock%>')"><i class="fi-rs-shopping-bag-add"></i></a>
+                                                </div>
+                                            <% } %>
+                                        </div>
+                                    </div>
+                                </div>
+                            <% } %>
+                        <% }) %>
+                    </div>
+               
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- More sections go here ... -->
+
+    <section class="mb-50">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="banner-bg wow fadeIn animated" style="background-image: url('../assets/imgs/banner/banner-8.jpg')">
+                        <div class="banner-content">
+                            <h5 class="text-grey-4 mb-15">Shop Today’s Deals</h5>
+                            <h2 class="fw-600">Happy <span class="text-brand">Mother's Day</span>. Big Sale Up to 40%</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<script>
+    function addToCart(proId, stock) {
+        if (stock <= 0) {
+            Swal.fire({
+                icon: "error",
+                title: "Out of Stock",
+                text: "This product is currently out of stock.",
+            });
+        } else {
+            $.ajax({
+                url: "/add-cart/" + proId,
+                method: "POST",
+                success: (response) => {
+                    console.log(response, "response");
+                    if (response.status == true) {
+                        Swal.fire({
+                            title: "Added To Cart",
+                            text: "Your Product has been added to Cart",
+                            icon: "success",
+                            timer: 5000,
+                        }).then(() => {
+
+                            if (response.newStock !== undefined) {
+                                // Select the specific product card by its ID and update the stock
+                                const productStockElement = document.getElementById(`productStock_${proId}`);
+                                if (productStockElement) {
+                                    productStockElement.textContent = 'Available stock' + response.newStock;
+                                }
+                            }
+                        });
+
+                    }
+
+                     else {
+                        location.href = "/login";
+                    }
+                },
+                error: (error) => {
+                    console.error(error);
+                    Swal.fire({
+                        icon: "error",
+                        title: "Error",
+                        text: "An error occurred while adding the product to the cart.",
+                    });
+                },
+            });
+        }
+    }
+    </script>
+
+<script>
+	function addToWishList(proId) {
+		event.preventDefault();
+    $.ajax({
+      url: '/add-to-wishlist',
+      method: 'POST',
+      data: {
+        proId: proId
+      },
+      success: (response) => {
+        if (response.status===true) {
+          // Product added to Wishlist successfully
+		  Swal.fire({
+			position: 'centre',
+			icon: 'success',
+			title: 'Product added to wish list',
+			showConfirmButton: false,
+			timer: 1500
+			})
+          
+
+        } else {
+          // Error adding product to Wishlist
+          Swal.fire({
+            icon: 'error',
+            title: 'Product already exist in Wishlist',
+            timer: 2000
+          });
+
+        }
+      }
+    })
+  }
+
+
+</script>
+
+<%- include('../layouts/footer.ejs') %>
+
