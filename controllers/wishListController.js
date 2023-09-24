@@ -1,5 +1,5 @@
 const User = require("../models/userModel");
-const wishListModel = require("../models/wishListModel");
+const wishListModel = require("../models/wishlistModel");
 const wishListHelper = require("../helpers/wishListHelper");
 const mongoose = require('mongoose');
 
