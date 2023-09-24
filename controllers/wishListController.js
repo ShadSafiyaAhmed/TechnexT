@@ -1,7 +1,7 @@
 const User = require("../models/userModel");
 const wishListModel = require("../models/wishListModel");
 const wishListHelper = require("../helpers/wishListHelper");
-const { ObjectId } = require("mongodb");
+const mongoose = require('mongoose');
 
 const loadWishList = async (req, res) => {
   try {
