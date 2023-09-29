@@ -29,44 +29,36 @@ const sendOTP=async(phoneNumber)=>{
     throw new Error('Failed to Send OTP')
   }
 }
-
 const verifyOTP=async(req,res)=>{
-try {
-  console.log('Verification start')
-  const  userData= await User.findOne({_id:req.session.user_id}) 
-  const userMobile=userData.mobile 
-  const otp=req.body.otp
-  console.log("check ",userMobile,otp)
+  try {
 
-  if(otps[userMobile]) {
-    const {otp: storedOTP, timestamp} = otps[userMobile]
-    const currentTime = Date.now();
-    const expirationTime = timestamp + otpValidityDuration;
-    const remainingTime = Math.max(0, Math.floor((expirationTime - currentTime) / 1000)); 
+    console.log('Verification start')
+    const  userData= await User.findOne({_id:req.session.user_id})
+    const userMobile=userData.mobile
+    const otp=req.body.otp
+    console.log("check ",userMobile,otp)
 
-if (remainingTime <= 0) {
-  res.render('otp', { message: 'OTP has expired. Please request a new one.', remainingTime: 0 });
-  delete otps[userMobile];
-  return;
-}
+ 
+    client.verify.v2.services(verifyServiceSid).verificationChecks.create({to:userMobile,code:otp})
+    .then(async(verification_check)=>{
+     if(verification_check.status ==='approved'){
+       console.log('you are verified',verification_check.status)
+       await User.updateOne({ _id: req.session.user_id }, { otp: null,is_verified:1});
+       res.redirect('/home')
 
-res.render('otp', { message: '', remainingTime: remainingTime});
-    if(otp === storedOTP) {
-      console.log('You are Verified')
-      await User.updateOne({ _id : req.session.user_id}, {otp : null, is_verified : 1})
-      res.redirect('/home')
-    }else{
-      res.render('otp', {message : 'Invalid OTP. Please try again',remainingTime})
-    }
-    delete otps[userMobile]
-  }else{
-    res.render('otp', {message: 'OTP not found. Please request a new one'})
-  }
+     }
+     else{
+
+      res.render('otp', { message: 'Invalid OTP. Please try again.' });
+     }
+ 
+    });
+    
+  } catch (error) {
+    
+    console.log(error.message)
   
-} catch (error) {
-  console.log(error.message)
-
-}
+  }
 
 }
 
