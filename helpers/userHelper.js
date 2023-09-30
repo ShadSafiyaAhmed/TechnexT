@@ -398,7 +398,7 @@ changinguserPassword:async(req,res)=>{
       const userData = await User.findById({ _id: req.session.user_id });
       const wallet = await Wallet.findOne({ userId: req.session.user_id });
 
-      res.render('Account', { user: userData, wallet: wallet });
+      res.render('account', { user: userData, wallet: wallet });
     } catch (error) {
       console.log(error.message)
       res.redirect('user-error')
