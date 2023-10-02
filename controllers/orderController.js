@@ -132,7 +132,7 @@ const walletOrder = async (req, res) => {
 const OrderList = async (req, res) => {
   try {
     const Orders = await Order.find();
-    res.render("OrderList", { userOrder: Orders });
+    res.render("orderList", { userOrder: Orders });
   } catch (error) {
     console.log(error.message);
   }
@@ -250,7 +250,7 @@ const declineReturn = async (req, res) => {
     order.status = "Return declined";
 
     await order.save();
-    res.redirect("/admin/OrderList");
+    res.redirect("/admin/orderList");
   } catch (error) {
     console.log(error.message);
   }
