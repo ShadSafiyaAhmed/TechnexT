@@ -232,7 +232,7 @@ const orderSuccess = async (req, res) => {
 
     const orders = await Order.find({ user: userId }).exec();
 
-    res.render("Ordersuccess", {
+    res.render("ordersuccess", {
       user: userData,
       orders: orders,
       wishlistCount: wishlistCount,
