@@ -49,8 +49,8 @@ module.exports = {
         secure:false,
         requireTls:true,
         auth:{
-          user:'rosie.jacobi@ethereal.email',
-          pass:'BuuyzXUJkb91BADrWW'
+          user:'jacey.gusikowski@ethereal.email',
+          pass:'atrAPsXtC1buvTtG5Y'
         }
       }
       )
