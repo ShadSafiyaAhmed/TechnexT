@@ -58,7 +58,7 @@ module.exports = {
         from:config.emailUser,
         to:email,
         subject:'For verification mail',
-        html:'<p>Hii '+name+',please click here to <a href="http://localhost:3000/forget-password?token='+token+'">Reset</a>your password</p>'
+        html:'<p>Hii '+name+',please click here to <a href="https://shadahmed.live/forget-password?token='+token+'">Reset</a>your password</p>'
         //http://localhost:3000
       }
       transporter.sendMail(mailOptions,function(error,info){
